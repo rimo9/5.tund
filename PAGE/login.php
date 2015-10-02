@@ -1,9 +1,4 @@
 <?php
-
-	//ühenduse loomiseks kasutajaga
-	require_once("../../config.php");
-	$database = "if15_rimo";
-	$mysqli = new mysqli($servername, $username, $password, $database);
 	
 	//errorid
 	$email_error = "";
@@ -43,18 +38,7 @@
 			if($password_error == "" && $email_error == ""){
 				$login_accepted = "test";
 				$password_hash = hash("sha512", $password);
-				$stmt = $mysqli->prepare("SELECT id, email FROM user_info WHERE email=? AND password=?");
-				$stmt->bind_param("ss", $email, $password_hash);
-				//vastuse muutujatesse				
-				$stmt->bind_result($id_from_db, $email_from_db);
-				$stmt->execute();
-				//kas saime andmebaasist kätte?
-				if($stmt->fetch()){
-					$login_accepted = "You can login. Email is ".$email." and password is ".$password.". User id= ".$id_from_db;
-				}else{
-					echo "Wrong password or email";
-				}
-				$stmt->close();
+				loginUser();
 			}
 		}
 		if(isset($_POST["Create"])){
@@ -94,15 +78,7 @@
 				$password_hash = hash("sha512", $Cpassword);
 				echo "<br>";
 				echo $password_hash;
-				$stmt = $mysqli->prepare("INSERT INTO user_info (email, password, username) VALUES (?, ?, ?)");
-				//Kui error kasuta:
-				//echo $mysqli->error;
-				//echo $stmt->error;
-			
-				//?? saavad väärtused
-				$stmt->bind_param("sss", $Cemail, $password_hash, $Cusername);
-				$stmt->execute();
-				$stmt->close();
+				createUser();
 			}
 
 			
@@ -115,7 +91,6 @@
 		$data = htmlspecialchars($data);    // muudab asjad tekstiks
 		return $data;	
 	}
-	$mysqli->close();
 ?>
 
 <?php
