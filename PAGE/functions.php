@@ -1,0 +1,3 @@
+<?php
+//Kõik ab seotud
+?>
