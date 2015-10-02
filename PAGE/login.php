@@ -1,4 +1,7 @@
 <?php
+
+	//laeme functions faili
+	require_once("functions.php");
 	
 	//errorid
 	$email_error = "";
@@ -14,13 +17,10 @@
 	$Cpassword = "";
 	$Cusername = "";
 	$Cemail = "";
-	$login_accepted = "";
 	
 	//kontrollin kas keegi vajutas nuppu
 	if($_SERVER["REQUEST_METHOD"] == "POST"){
-		
 		if(isset($_POST["Login"])){
-		
 			//kas e-post on tühi
 			if(empty($_POST["email"])){
 				//jah oli tühi
@@ -36,9 +36,9 @@
 				$password = test_input($_POST["password"]);
 			}
 			if($password_error == "" && $email_error == ""){
-				$login_accepted = "test";
+				echo "Kasutajanimi on ".$email." ja parool on ".$password;
 				$password_hash = hash("sha512", $password);
-				loginUser();
+				loginUser($email, $password_hash);
 			}
 		}
 		if(isset($_POST["Create"])){
@@ -66,7 +66,6 @@
 				}else{
 					$Cpassword = test_input($_POST["Cpassword"]);
 				}
-				
 			}
 			if($_POST["Cpassword"] !== $_POST["repassword"]){
 				//kui parool ei võrdu kordusparooliga lükkab errori ette
@@ -78,7 +77,7 @@
 				$password_hash = hash("sha512", $Cpassword);
 				echo "<br>";
 				echo $password_hash;
-				createUser();
+				createUser($Cemail, $password_hash, $Cusername);
 			}
 
 			
@@ -103,7 +102,6 @@ $file_name = "login.php";
 
 	<h3>Mõtlesin siis teha lehe kuhu inimesed saavad teha postitusi erinevate teemade alla ja teised saavad siis kommenteerida, põhimõtteliselt väga lihtsustatud reddit</h3>
 	<h2>Login</h2>
-	<?php echo $login_accepted ?>
 	<p>* required field.</p>
 	<form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" method="post">
 	<input name="email" type="email" placeholder="E-mail" value="<?php echo $email ?>"> * <?php echo $email_error?><br><br>
