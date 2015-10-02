@@ -109,19 +109,19 @@ $file_name = "login.php";
 	<h3>Mõtlesin siis teha lehe kuhu inimesed saavad teha postitusi erinevate teemade alla ja teised saavad siis kommenteerida, põhimõtteliselt väga lihtsustatud reddit</h3>
 	<h2>Login</h2>
 	<p>* required field.</p>
-	<form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" method="post">
-	<input name="email" type="email" placeholder="E-mail" value="<?php echo $email ?>"> * <?php echo $email_error?><br><br>
-	<input name="password" type="password" placeholder="password"> * <?php echo $password_error?><br><br>
+	<form action="<?=htmlspecialchars($_SERVER["PHP_SELF"]);?>" method="post">
+	<input name="email" type="email" placeholder="E-mail" value="<?php echo $email ?>"> * <?=$email_error?><br><br>
+	<input name="password" type="password" placeholder="password"> * <?=$password_error?><br><br>
 	<input name="Login" type="submit" value="Login"> <br><br>
 	</form>
 
 	<h2>Create user</h2>
 	<p>* required field.</p>
-	<form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" method="post">
-	<input name="Cusername" type="text" placeholder="Username" value="<?php echo $Cusername ?>"> * <?php echo $create_usererror?><br><br>
-	<input name="Cemail" type="email" placeholder="E-mail" value="<?php echo $Cemail ?>"> * <?php echo $create_emailerror?><br><br>
-	<input name="Cpassword" type="password" placeholder="password"> * <?php echo $create_passworderror?><br><br>
-	<input name="repassword" type="password" placeholder="password again"> * <?php echo $create_passwordAerror?><br><br>
+	<form action="<?=htmlspecialchars($_SERVER["PHP_SELF"]);?>" method="post">
+	<input name="Cusername" type="text" placeholder="Username" value="<?php echo $Cusername ?>"> * <?=$create_usererror?><br><br>
+	<input name="Cemail" type="email" placeholder="E-mail" value="<?php echo $Cemail ?>"> * <?=$create_emailerror?><br><br>
+	<input name="Cpassword" type="password" placeholder="password"> * <?=$create_passworderror?><br><br>
+	<input name="repassword" type="password" placeholder="password again"> * <?=$create_passwordAerror?><br><br>
 	<input name="Create" type="submit" value="Create"><br><br>
 	</form>
 	
