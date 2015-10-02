@@ -3,6 +3,12 @@
 	//laeme functions faili
 	require_once("functions.php");
 	
+	//kontrollin, kas kasutaja on sisse loginud
+	if(isset($_SESSION["id_from_db"])){
+		//suuname data lehele kui on sisseloginud
+		header("Location: data.php");
+	}
+	
 	//errorid
 	$email_error = "";
 	$password_error = "";
@@ -36,7 +42,7 @@
 				$password = test_input($_POST["password"]);
 			}
 			if($password_error == "" && $email_error == ""){
-				echo "Kasutajanimi on ".$email." ja parool on ".$password;
+				echo "parool on ".$password;
 				$password_hash = hash("sha512", $password);
 				loginUser($email, $password_hash);
 			}

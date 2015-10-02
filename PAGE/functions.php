@@ -5,6 +5,9 @@
 	require_once("../../configglobal.php");
 	$database = "if15_rimo";
 
+	//pamene sessioni käima, saame kasutada $_SESSION muutujaid
+	session_start();
+	
 	//lisame kasutaja andmebaasi
 	function createUser($Cemail, $password_hash, $Cusername){
 		$mysqli = new mysqli($GLOBALS["servername"], $GLOBALS["server_username"], $GLOBALS["server_password"], $GLOBALS["database"]);
@@ -18,14 +21,19 @@
 	//logime sisse
 	function loginUser($email, $password_hash){
 		$mysqli = new mysqli($GLOBALS["servername"], $GLOBALS["server_username"], $GLOBALS["server_password"], $GLOBALS["database"]);
-		$stmt = $mysqli->prepare("SELECT id, email FROM user_info WHERE email=? AND password=?");
+		$stmt = $mysqli->prepare("SELECT id FROM user_info WHERE email=? AND password=?");
 		$stmt->bind_param("ss", $email, $password_hash);
 		//vastuse muutujatesse				
-		$stmt->bind_result($id_from_db, $email_from_db);
+		$stmt->bind_result($id_from_db);
 		$stmt->execute();
 		//kas saime andmebaasist kätte?
 		if($stmt->fetch()){
-			echo " User id=".$id_from_db;
+			echo " Logged in with user id=".$id_from_db." email ".$email_from_db;
+			$_SESSION["id_from_db"] = $id_from_db;
+			$_SESSION["user_email"] = $email;
+			
+			//suuname kasutaja data.php lehele
+			header("Location: data.php");
 		}else{
 			echo "Wrong password or email";
 		}
