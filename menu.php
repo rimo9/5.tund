@@ -12,4 +12,10 @@
 	}else{
 		echo '<li><a href="login.php">Login</a></li>';}
 	?>
+	
+	<?php if($file_name == "data.php"){
+		echo "<li>Data</li>";
+	}else{
+		echo '<li><a href="data.php">Data</a></li>';}
+	?>
 </ul>
